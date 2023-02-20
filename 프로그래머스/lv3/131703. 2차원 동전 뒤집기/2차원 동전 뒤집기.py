@@ -1,5 +1,8 @@
 from collections import deque
-# TLE
+
+# simple bfs problem with single trick
+# solved by branching out those that are not reachable
+# for a cell, if both row and col are flipped and not matched, branch
 def solution(beginning, target):
     ROW, COL = len(beginning), len(beginning[0])
 
@@ -25,7 +28,7 @@ def solution(beginning, target):
         for i in range(ROW):
             new_fr = fr[::]
             new_fr[i] ^= True
-            for c in range(COL):
+            for c in range(COL):    # branch goes here 1
                 if not fc[c]: continue
                 if (fc[c] and new_fr[i]) and (beginning[i][c] != target[i][c]):
                     break
@@ -35,7 +38,7 @@ def solution(beginning, target):
         for j in range(COL):
             new_fc = fc[::]
             new_fc[j] ^= True
-            for r in range(ROW):
+            for r in range(ROW):    # branch goes here 2
                 if not fr[r]: continue
                 if (fr[r] and new_fc[j]) and (beginning[r][j] != target[r][j]):
                     break
