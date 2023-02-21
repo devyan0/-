@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -20,17 +19,11 @@ public class Main {
 			map[i] = st.nextToken().toCharArray();
 		}
 		
-//		print();
 		int reachCnt=0;
-		for (int r=0; r<R; ++r) {
+		for (int r=0; r<R; ++r) 
 			reachCnt += (connect(r, 0) ? 1 : 0);
-//			print();
-		}
-			
 		
 		System.out.println(reachCnt);
-		
-
 	}
 	
 	private static boolean connect(int i, int j) {
@@ -41,24 +34,12 @@ public class Main {
 
 		boolean reach = false;		
 		
-		
-		for (int di=-1; di<=1 && !reach; di++) {
-			if (0 <= i+di && i+di <R && map[i+di][j+1] == '.') {
+		for (int di=-1; di<=1 && !reach; di++) 
+			if (0 <= i+di && i+di <R && map[i+di][j+1] == '.') 
 				reach = reach || connect(i+di, j+1);
-			}
-		}
-		
-		// if (!reach) map[i][j] = '.';
 
-		
 		return reach;
 	}
 	
-	private static void print() {
-		for (char[] row: map) {
-			System.out.println(Arrays.toString(row));
-		}
-		System.out.println();
-	}
 
 }
