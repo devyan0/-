@@ -54,16 +54,10 @@ public class Main {
 			match[i][j] = r;
 			match[j][i] = -r;
 			bt(n+1);
-			match[i][j] = -r;
-			match[j][i] = r;
 		}
-		
-		
 	}
 	
-	
 	private static boolean check() {
-		
 		for (int i=0; i<6; ++i) {
 			int w=0, d=-1, l=0;
 			for (int j=0; j<6; ++j) {
@@ -74,7 +68,6 @@ public class Main {
 			if (!(w==wins[i] && d==draws[i] && l==loses[i]))
 				return false;
 		}
-		
 		return true;
 	}
 	
