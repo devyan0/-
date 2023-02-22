@@ -14,16 +14,17 @@ def solution(sales, links):
             ci, co = dfs(child)
             child_in.append(ci)
             child_out.append(co)
-
+        
+        out_sum = sum(child_out)
         # select the node, not any of children
-        select_node = sales[node-1] + sum(child_out)
+        select_node = sales[node-1] + out_sum
 
         # ignore the node, select an optimal children
         ignore_node = float('inf')
         for ci, co in zip(child_in, child_out):
-            ignore_node = min(ignore_node, ci + sum(child_out) - co)
+            ignore_node = min(ignore_node, ci + out_sum - co)
 
-        # return select_node, ignore_node
+        # return select_node, ignore_node (but should min to optimize)
         return select_node, min(ignore_node, select_node)
 
     ceo_in, ceo_out = dfs(1)
