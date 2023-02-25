@@ -4,14 +4,6 @@ def solution(commands):
     merged = [[(i, j) for j in range(MAX)] for i in range(MAX)]
     values = [[None for _ in range(MAX)] for _ in range(MAX)]
 
-    def printBoard():
-        for i, row in enumerate(merged):
-            for j, val in enumerate(row):
-                nr, nc = val
-                if values[nr][nc]:
-                    print(i, j, values[nr][nc])
-        print()
-
     for c in commands:
         info = c.split(' ')
         if info[0] == 'UPDATE':
@@ -48,6 +40,7 @@ def solution(commands):
             val = values[x][y]
             for i in range(MAX):
                 for j in range(MAX):
+                    # if merged[i][j] == merged[x][y]: <- 원본이 훼손돼 중간에 로직이 망가진다
                     if merged[i][j] == (x, y):
                         merged[i][j] = (i, j)
                         values[i][j] = None
@@ -59,6 +52,5 @@ def solution(commands):
             x, y = merged[r][c]
             res.append(values[x][y] if values[x][y] else 'EMPTY')
 
-        # printBoard()
 
     return res
