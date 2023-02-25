@@ -19,37 +19,26 @@ public class Main {
 			for (int j=0; j<N; ++j)
 				board[i][j] = st.nextToken().charAt(0);
 		}
-		
-//		for (char[] line : board)
-//			System.out.println(Arrays.toString(line));
-		
+			
 		int[] res = bt(0, 0, N);
 		System.out.println(res[0]);
 		System.out.println(res[1]);
-		
-		
 	}
 	
 	private static int[] bt(int x, int y, int n) {
-		if (n == 1) {
+		if (n == 1) 
 			return board[x][y] == '1' ? new int[] {0, 1} : new int[] {1, 0};
-		}
-			
 		
 		int cnt=0;
 		for (int i=x; i<x+n; ++i)
 			for (int j=y; j<y+n; ++j)
 				if (board[i][j] == '1') cnt++;
 				else if (board[i][j] == '0') continue;
-		if (cnt==0) {
+		if (cnt==0) 
 			return new int[] {1, 0};
-		}
-			
-		if (cnt==n*n) {
+		
+		if (cnt==n*n) 
 			return new int[] {0, 1};
-		}
-			
-			
 				
 		int[] upperLeft = bt(x, y, n/2);
 		int[] upperRight = bt(x, y+n/2, n/2);
@@ -60,8 +49,5 @@ public class Main {
 				upperLeft[0]+upperRight[0]+lowerLeft[0]+lowerRight[0],
 				upperLeft[1]+upperRight[1]+lowerLeft[1]+lowerRight[1]
 		};
-		
-		
 	}
-
 }
