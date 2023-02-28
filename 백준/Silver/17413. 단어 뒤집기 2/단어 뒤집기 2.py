@@ -9,8 +9,7 @@ while r < len(s):
         if s[r] == '>':
             res += s[l:r+1]
             l = r = r+1
-        else:
-            r += 1
+        else: r += 1
     elif s[r] == '<':
         res += s[l:r][::-1]
         l = r
@@ -20,6 +19,5 @@ while r < len(s):
     else:
         r += 1
 
-# switch l .. r
 res += s[l:r][::-1]
 print(res)
