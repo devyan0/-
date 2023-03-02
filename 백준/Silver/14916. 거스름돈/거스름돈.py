@@ -1,14 +1,20 @@
-N = int(input())
+n = int(input())
+cnt = 0
+while True:
+    if n < 0:       # base case 1: impossible
+        cnt = -1
+        break
+    if n == 0:      # base case 2: complete
+        break
 
-if N <= 5:
-    print([-1, -1, 1, -1, 2, 1][N])
-    quit()
+    if n % 5 == 0:  # step 1: if n can be composed only with 5s
+        cnt += n // 5
+        n -= 5 * (n // 5)
 
-dp = [float('inf') for _ in range(N+1)]
-dp[2] = dp[5] = 1
+    if n == 0:      # step 1 success
+        break
 
-for i in range(1, N+1):
-    if 2 <= i: dp[i] = min(dp[i], dp[i-2]+1)
-    if 5 <= i: dp[i] = min(dp[i], dp[i-5]+1)
+    n -= 2          # step 2: use one coin of 2
+    cnt += 1
 
-print(dp[N] if dp[N] < float('inf') else -1)
+print(cnt)
