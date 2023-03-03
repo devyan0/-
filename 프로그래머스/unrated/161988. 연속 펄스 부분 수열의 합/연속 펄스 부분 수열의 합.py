@@ -4,13 +4,10 @@ def solution(sequence):
     # print(seq1)
     # print(seq2)
     def kadane(seq):
-        max_ = 0
-        acc = 0
+        max_, acc = 0, 0
         for n in seq:
-            if 0 < acc + n:
-                acc += n
-            else:
-                acc = 0
+            if 0 < acc + n: acc += n
+            else: acc = 0
             max_ = max(max_, acc)
         return max_
     
