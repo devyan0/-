@@ -11,4 +11,4 @@ def solution(wallpaper):
     return [a, b, c+1, d+1]
     
     
-    
+     
