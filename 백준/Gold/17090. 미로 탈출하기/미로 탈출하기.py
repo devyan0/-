@@ -1,31 +1,46 @@
 import sys
-MOVE = {'U': (-1, 0), 'R': (0, 1), 'D': (1, 0), 'L': (0, -1)}
+sys.setrecursionlimit(10**6)
 
-N, M = map(int, input().split())
-sys.setrecursionlimit(N*M)
+n, m = map(int,input().split())
 
-board = [list(input()) for _ in range(N)]
-memo = [[-2 for _ in range(M)] for _ in range(N)]   # -2: undetermined, -1: finding, 0: False, 1: True
-out_of_bound = lambda i, j: not (0<=i<N) or not (0<=j<M)
+board = []
+for _ in range(n):
+    board.append(list(input()))
 
+canExit = [[False for _ in range(m)] for _ in range(n)] # 이미 탐색이 끝난 노드가 탈출 가능한지 표시
+visit = [[False for _ in range(m)] for _ in range(n)]
 
-def dp(i, j):
-    if 0 <= memo[i][j]:
-        return memo[i][j]
-    if memo[i][j] == -1:
-        memo[i][j] = 0
-        return memo[i][j]
+def dfs(y,x):
+    visit[y][x] = True
 
-    memo[i][j] = -1
-    di, dj = MOVE[board[i][j]]
-    ni, nj = i+di, j+dj
+    ny = y
+    nx = x
+    # 명령어에 따라 좌표 보정해줌
+    if board[y][x] == 'U':
+        ny -= 1
+    elif board[y][x] == 'R':
+        nx += 1
+    elif board[y][x] == 'D':
+        ny += 1
+    elif board[y][x] == 'L':
+        nx -= 1
 
-    memo[i][j] = out_of_bound(ni, nj) or dp(ni, nj)
-    return memo[i][j]
+    if ny < 0 or ny >= n or nx < 0 or nx >= m : # 탈출한 경우 탈출 가능하다고 표시한다.
+        canExit[y][x] = True
+    elif visit[ny][nx] :  # 이미 방문한 노드면 탈출 가능여부도 정해졌으니까 dfs 안돌리고 탈출가능 여부만 가져온다.
+        canExit[y][x] = canExit[ny][nx]
+    else :
+        canExit[y][x] = dfs(ny,nx)  # 아직 방문 안했으면 탈출 가능여부 모르니까 dfs탐색 돌려서 탈출가능한지 파악한다.
+    return canExit[y][x]  # 현재 노드의 탈출 가능여부를 반환한다.
 
+for y in range(n):
+    for x in range(m):
+        if not visit[y][x] :
+            dfs(y,x)
 
-cnt = 0
-for i in range(N):
-    for j in range(M):
-        cnt += dp(i, j)
-print(cnt)
+ans = 0
+for y in range(n):
+    for x in range(m):
+        if canExit[y][x] :
+            ans += 1
+print(ans)
